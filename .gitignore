@@ -1,0 +1,18 @@
+# python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+.devcontainer/
+dist/
+.build/
+
+# env
+.env
+.env.*
+!.env.example
+
+# macOS
+.DS_Store
+
