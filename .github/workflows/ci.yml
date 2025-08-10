@@ -1,14 +1,31 @@
 name: CI
 on:
-  push: { branches: [main] }
+  push:
+    branches: [main]
   pull_request:
+
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.12"]
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
-        with: { python-version: "3.12" }
-      - run: python -m venv .venv && . .venv/bin/activate && pip install -U pip
-      - run: . .venv/bin/activate && pip install -r requirements.txt
-      - run: . .venv/bin/activate && pytest -q
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - run: pip install -r requirements.txt
+      - run: pip install ruff black pytest
+
+      - name: Lint (ruff)
+        run: ruff check .
+
+      - name: Format check (black)
+        run: black --check .
+
+      - name: Tests
+        run: pytest -q
