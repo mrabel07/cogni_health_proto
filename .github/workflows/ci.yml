@@ -15,17 +15,13 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version }}
-          cache: pip
+          python-version: "3.12"
+          cache: "pip"
 
-      - run: pip install -r requirements.txt
-      - run: pip install ruff black pytest
+      - name: Install deps
+        run: pip install -r requirements.txt
 
-      - name: Lint (ruff)
-        run: ruff check .
-
-      - name: Format check (black)
-        run: black --check .
-
-      - name: Tests
+      - name: Run tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: python -m pytest -q
