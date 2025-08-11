@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "FastAPI (HTTPS)",
+      "type": "python",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": [
+        "app.main:app",
+        "--host", "127.0.0.1",
+        "--port", "8000",
+        "--ssl-certfile", "certs/localhost.crt",
+        "--ssl-keyfile", "certs/localhost.key",
+        "--reload"
+      ],
+      "envFile": "${workspaceFolder}/.env",
+      "justMyCode": true
+    }
+  ]
+}
