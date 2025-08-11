@@ -16,3 +16,7 @@ dist/
 # macOS
 .DS_Store
 
+# certs
+certs/*.crt
+certs/*.key
+*.pem 
