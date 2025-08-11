@@ -1,3 +1,4 @@
+from sqlalchemy import Column, DateTime
 from datetime import datetime, timedelta, timezone
 from sqlmodel import SQLModel, Field
 
@@ -7,7 +8,7 @@ class Token(SQLModel, table=True):
     refresh_token: str
     scope: str = ""
     token_type: str = "Bearer"
-    expires_at: datetime
+    expires_at: datetime = Field(sa_column=Column(DateTime(timezone=True)))
 
     @classmethod
     def from_token_response(cls, data: dict, user_id: str):
