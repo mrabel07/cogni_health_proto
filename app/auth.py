@@ -5,6 +5,10 @@ import httpx
 from fastapi import APIRouter, HTTPException, Request
 from starlette.responses import RedirectResponse, JSONResponse
 from app.config import settings
+from sqlmodel import select
+from app.db import get_session
+from app.models import Token
+from fastapi import Depends
 
 router = APIRouter()
 
@@ -31,7 +35,7 @@ def login():
     return resp
 
 @router.get("/callback")
-async def callback(request: Request, code: str, state: str):
+async def callback(request: Request, code: str, state: str, session=Depends(get_session)):
     # CSRF check
     if state != request.cookies.get("fitbit_oauth_state"):
         raise HTTPException(400, detail="Invalid OAuth state")
@@ -59,8 +63,26 @@ async def callback(request: Request, code: str, state: str):
             prof = await client.get("https://api.fitbit.com/1/user/-/profile.json")
         if prof.status_code == 200:
             user_id = prof.json()["user"]["encodedId"]
+    
+    # Build a Token model from Fitbit's token response for this Fitbit user.
+    record = Token.from_token_response(tok, user_id)
 
-    # Clear the state cookie and return something simple for now
+    # Upsert the token row for this user_id.
+    # If a token already exists, update it in place; otherwise insert a new row.
+    existing = session.get(Token, user_id)
+    if existing:
+        existing.access_token = record.access_token
+        existing.refresh_token = record.refresh_token
+        existing.scope = record.scope
+        existing.token_type = record.token_type
+        existing.expires_at = record.expires_at
+        session.add(existing)
+    else:
+        session.add(record)
+    session.commit()
+
+    # Return a minimal success payload and clear the one-time CSRF cookie.
+    # Tip: avoid returning tokens or any sensitive data here; scope + user_id is enough.
     resp = JSONResponse({"ok": True, "user_id": user_id, "scope": tok.get("scope", "")})
     resp.delete_cookie("fitbit_oauth_state")
     return resp
