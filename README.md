@@ -1,4 +1,4 @@
-# my_fitbit_proto
+# cogni_health_proto
 
 Prototype FastAPI backend integrating with the Fitbit Web API.
 

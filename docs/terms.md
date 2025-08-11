@@ -1,7 +1,7 @@
 # Terms of Service
 _Last updated: 2025-08-10_
 
-my_fitbit_proto (the “Service”) is a prototype operated by Abenivate LLC.
+cogni_health_proto (the “Service”) is a prototype operated by Abenivate LLC.
 
 ## 1) Purpose of Service
 We will access Fitbit data only to power user-facing features that clearly benefit a user’s health or fitness. This includes features that let users journal, report, monitor, analyze, or sync their own activity, sleep, mental well-being, nutrition, health measurements, or related fitness/health information. We will request only the minimum scopes necessary for these features, and all access will be initiated by the user with explicit consent.

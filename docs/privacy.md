@@ -1,7 +1,7 @@
 # Privacy Policy
 _Last updated: 2025-08-10_
 
-Abenivate LLC operates my_fitbit_proto (the “Service”).
+Abenivate LLC operates cogni_health_proto (the “Service”).
 
 ## 1. Scope 
 We use Fitbit data solely to provide and improve user-visible health/fitness features such as journaling, reporting, monitoring, analysis, and syncing of your own data. We do not use Fitbit data for advertising or sell it to third parties. We request only the permissions needed for these features, and you can revoke access at any time by disconnecting the app in your Fitbit account settings.

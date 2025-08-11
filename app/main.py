@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from app.routers import biometrics
 from app import auth
-app = FastAPI(title="my_fitbit_proto", version="0.1.0")
+app = FastAPI(title="cogni_health_proto", version="0.1.0")
 @app.get("/health")
 def health():
     return {"status": "ok"}
