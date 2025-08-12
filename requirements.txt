@@ -7,3 +7,4 @@ python-dotenv
 pytest
 
 pydantic-settings
+matplotlib>=3.9
