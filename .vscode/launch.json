@@ -15,7 +15,12 @@
         "--reload"
       ],
       "envFile": "${workspaceFolder}/.env",
-      "justMyCode": true
+      "justMyCode": true,
+      "serverReadyAction": {
+        "pattern": "Uvicorn running on (https?://\\S+)",
+        "uriFormat": "%s/",
+        "action": "openExternally"
+      }
     }
   ]
 }
