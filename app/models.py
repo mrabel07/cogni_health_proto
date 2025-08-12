@@ -1,5 +1,5 @@
 from sqlalchemy import Column, DateTime
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta, timezone, date
 from sqlmodel import SQLModel, Field
 
 class Token(SQLModel, table=True):
@@ -20,3 +20,10 @@ class Token(SQLModel, table=True):
             token_type=data.get("token_type", "Bearer"),
             expires_at=datetime.now(timezone.utc) + timedelta(seconds=int(data.get("expires_in", 28800))),
         )
+    
+class IntradayMinute(SQLModel, table=True):
+    user_id: str = Field(primary_key=True)
+    ts: datetime = Field(primary_key=True)  # local day + HH:MM:SS from Fitbit intraday
+    day: date = Field(index=True)
+    steps: int | None = None
+    hr: int | None = None
